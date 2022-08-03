@@ -86,8 +86,6 @@ func main() {
                 curr.children = append(curr.children, newNode)
                 fmt.Printf("New curr : %v\n", curr.data)
                 fmt.Printf("Child curr data : %v\n", newNode.data)
-            }else {
-                break
             }
         }
     }
