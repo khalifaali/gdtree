@@ -45,8 +45,7 @@ func main() {
 		parentDep := strings.Split(line, " ")[0]
 		childDep := strings.Split(line, " ")[1]
 		if root == nil {
-			data := parentDep
-			root = &Node{data: data}
+			root = &Node{data: parentDep}
 			curr = root
 			queue = append(queue, insertChildren(root, childDep))
 		} else if curr.data == parentDep {
