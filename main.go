@@ -16,11 +16,15 @@ type Node struct {
 func main() {
 	cmd := exec.Command("go", "mod", "graph")
 
-	var out bytes.Buffer
+	var out, stderr bytes.Buffer
 	cmd.Stdout = &out
-
+	cmd.Stderr = &stderr
 	err := cmd.Run()
 
+	if err != nil {
+		fmt.Println(fmt.Sprint(err) + ": " + stderr.String())
+		return
+	}
 	if err != nil {
 		fmt.Println("Error occurred")
 		fmt.Println(err)
@@ -47,12 +51,13 @@ func main() {
 		if root == nil {
 			root = &Node{data: parentDep}
 			curr = root
-			queue = append(queue, insertChildren(root, childDep))
+			insertChildren(root, childDep)
+			queue = append(queue, root.children[len(root.children)-1])
 		} else if curr.data == parentDep {
-			queue = append(queue, insertChildren(curr, childDep))
+			insertChildren(curr, childDep)
+			queue = append(queue, curr, curr.children[len(curr.children)-1])
 		} else {
 			if len(queue) > 0 {
-				fmt.Println("Changed parent\n")
 				//We encountered a depenency with no dependencies of its own
 				// In that case we dequeue
 				// until we find one matching go mod graph output
@@ -65,13 +70,33 @@ func main() {
 			}
 		}
 	}
+	nodePtr := root
+	bfs(nodePtr)
 
 }
 
-func insertChildren(parentNode *Node, childData string) *Node {
+func insertChildren(parentNode *Node, childData string) {
 	newNode := &Node{data: childData}
 	parentNode.children = append(parentNode.children, newNode)
-	fmt.Printf("New curr : %v\n", parentNode.data)
-	fmt.Printf("Child curr data : %v\n", newNode.data)
-	return newNode
+}
+
+func bfs(node *Node) {
+	var q []*Node
+	q = append(q, node.children[:]...)
+
+	for i := 0; i < len(q); i++ {
+		node := q[i]
+		if node.children != nil {
+			q = append(q, node.children[:]...)
+		}
+		fmt.Printf("Node data part 2.... :  %v\n", node.data)
+
+	}
+}
+
+func printTreeBox(node *Node, depth int) {
+	for i := 0; i < depth; i++ {
+		fmt.Println("|")
+	}
+	fmt.Printf("\u251c")
 }
