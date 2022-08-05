@@ -71,8 +71,9 @@ func main() {
 			}
 		}
 	}
-	nodePtr := root
-	bfs(nodePtr)
+
+	//bfs(nodePtr)
+	printTreeBox([]*Node{root},0)
 
 }
 
@@ -133,11 +134,15 @@ func printTreeBox(children []*Node, depth int) {
 			fmt.Printf("── %v\n", children[i].data)
 		} else if i < len(children) - 1 { 
 			//printSpaces(depth)
-			fmt.Printf("├── %v\n", children[i].data)
+			fmt.Printf("  ├── %v\n", children[i].data)
 		} else {
 			//"\u2514"
 			printSpaces(depth)
-			fmt.Printf("└── %v\n", children[i].data)
+			fmt.Printf("  └── %v\n", children[i].data)
+		}
+
+		if len(children[i].children) > 0 {
+			printTreeBox(children[i].children, depth + 1)
 		}
 		
 	}
@@ -145,7 +150,7 @@ func printTreeBox(children []*Node, depth int) {
 
 
 func printSpaces(depth int) {
-	for j := 0 ; j < depth * 2 ; j++  {
+	for j := 0 ; j < depth * 2; j++  {
 		fmt.Printf(" ")
 	}
 }
