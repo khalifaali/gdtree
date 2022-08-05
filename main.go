@@ -84,19 +84,38 @@ func insertChildren(parentNode *Node, childData string) {
 func bfs(node *Node) {
 	var q []*Node
 	q = append(q, node)
-	q = append(q, node.children[:]...)
-	depth := 0
+ 	seen := make(map[string]int)
+	//depth := 0
 	for i := 0; i < len(q); i++ {
 		childNode := q[i]
 		if childNode.children != nil {
 			q = append(q, childNode.children[:]...)
-			fmt.Printf("Parent├──%v\n", childNode.data)
-			depth++ 
-		} //I want to print
+			fmt.Printf("parent %v\n", childNode.data)
+			//printTreeBox([]*Node{childNode}, depth) //A little bit of a hack but if we pass the parentNode
+													// as a list we can print it using the same loginc
+			//fmt.Printf("Parent├──%v\n", childNode.data
+			//We shouldn't increase the depth until we exhaust all the children??
+			//Some of these are all children of 1. element
+			// If we  seen that nodes parent increase the depth else continue
+			// We increase the depth bc if it has a child we want it to be at the
+			// same level as its
+			
+		
+	
+			
+		}
+
+		if _, prs := seen[childNode.data]; prs {
+			seen[childNode.data] = 1
+			//fmt.Println(seen)
+		} else {
+			seen[childNode.data]++
+		}
+		//I want to print
 		 // i thnk we fix this. Purge data from queue that are contained in the
 											//children you;ve aeen
 		//I need to add the seen to the children, and
-		printTreeBox(childNode.children, depth)
+		printTreeBox(childNode.children, seen[childNode.data])
 		//The queue also has the same data. So I need way to shrink the queue. for the elements seen?
 	}
 }
@@ -104,11 +123,29 @@ func bfs(node *Node) {
 //So now I need an index to pass, and the parent node to print out
 func printTreeBox(children []*Node, depth int) {
 	for i := 0; i < len(children); i++ {
-		for j := 0 ; j < depth; j++  {
-			fmt.Printf(" ")
-		}
+		printSpaces(depth)
 		fmt.Printf("Depth %v", depth)
 		fmt.Printf("\u2502\n")
-		fmt.Printf("\t├── %v\n", children[i].data)
+		// We're either printing the first element
+		// or we're printing everything but the last
+		// 
+		if depth == 0 {
+			fmt.Printf("── %v\n", children[i].data)
+		} else if i < len(children) - 1 { 
+			//printSpaces(depth)
+			fmt.Printf("├── %v\n", children[i].data)
+		} else {
+			//"\u2514"
+			printSpaces(depth)
+			fmt.Printf("└── %v\n", children[i].data)
+		}
+		
+	}
+}
+
+
+func printSpaces(depth int) {
+	for j := 0 ; j < depth * 2 ; j++  {
+		fmt.Printf(" ")
 	}
 }
