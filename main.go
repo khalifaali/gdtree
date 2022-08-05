@@ -133,12 +133,16 @@ func printTreeBox(children []*Node, depth int) {
 		if depth == 0 {
 			fmt.Printf("── %v\n", children[i].data)
 		} else if i < len(children) - 1 { 
-			//printSpaces(depth)
-			fmt.Printf("  ├── %v\n", children[i].data)
+			printSpaces(depth * 2)
+			//fmt.Printf("\u2502\n")
+			//printSpaces(depth * 2)
+			fmt.Printf("   ├── %v\n", children[i].data)
 		} else {
 			//"\u2514"
-			printSpaces(depth)
-			fmt.Printf("  └── %v\n", children[i].data)
+			printSpaces(depth * 2)
+			//fmt.Printf("\u2502\n")
+			//printSpaces(depth * 2)
+			fmt.Printf("   └── %v\n", children[i].data)
 		}
 
 		if len(children[i].children) > 0 {
