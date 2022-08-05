@@ -51,7 +51,7 @@ func main() {
 		if root == nil {
 			root = &Node{data: parentDep}
 			curr = root
-			fmt.Printf("Root baby %v\n", root.data)
+			//fmt.Printf("Root baby %v\n", root.data)
 			insertChildren(root, childDep)
 			queue = append(queue, root.children[len(root.children)-1])
 		} else if curr.data == parentDep {
@@ -83,22 +83,31 @@ func insertChildren(parentNode *Node, childData string) {
 
 func bfs(node *Node) {
 	var q []*Node
+	q = append(q, node)
 	q = append(q, node.children[:]...)
-	fmt.Printf("%v\n", node.data)
+	depth := 0
 	for i := 0; i < len(q); i++ {
 		childNode := q[i]
-		if node.children != nil {
+		if childNode.children != nil {
 			q = append(q, childNode.children[:]...)
-		}
-		fmt.Printf("├──%v\n", childNode.data)
-		printTreeBox(childNode.children)
+			fmt.Printf("Parent├──%v\n", childNode.data)
+			depth++ 
+		} //I want to print
+		 // i thnk we fix this. Purge data from queue that are contained in the
+											//children you;ve aeen
+		//I need to add the seen to the children, and
+		printTreeBox(childNode.children, depth)
 		//The queue also has the same data. So I need way to shrink the queue. for the elements seen?
 	}
 }
 //need a seen map for the nodes. and if its seen
 //So now I need an index to pass, and the parent node to print out
-func printTreeBox(children []*Node) {
+func printTreeBox(children []*Node, depth int) {
 	for i := 0; i < len(children); i++ {
+		for j := 0 ; j < depth; j++  {
+			fmt.Printf(" ")
+		}
+		fmt.Printf("Depth %v", depth)
 		fmt.Printf("\u2502\n")
 		fmt.Printf("\t├── %v\n", children[i].data)
 	}
