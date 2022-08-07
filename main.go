@@ -124,28 +124,36 @@ func bfs(node *Node) {
 //So now I need an index to pass, and the parent node to print out
 func printTreeBox(children []*Node, depth int) {
 	for i := 0; i < len(children); i++ {
-		printSpaces(depth)
-		fmt.Printf("Depth %v", depth)
-		fmt.Printf("\u2502\n")
+		//printSpaces(depth)
+		//fmt.Printf("Depth %v", depth)
+		//fmt.Printf("\u2502\n")
 		// We're either printing the first element
 		// or we're printing everything but the last
 		// 
+		if depth > 1 {
+			//printSpaces(depth)
+			fmt.Printf("\u2502")
+		}
+	
 		if depth == 0 {
-			fmt.Printf("── %v\n", children[i].data)
+			fmt.Printf("%v\n", children[i].data)
 		} else if i < len(children) - 1 { 
-			printSpaces(depth * 2)
+			printSpaces(depth - 1)
 			//fmt.Printf("\u2502\n")
 			//printSpaces(depth * 2)
-			fmt.Printf("   ├── %v\n", children[i].data)
+			fmt.Printf("├── %v\n", children[i].data)
 		} else {
 			//"\u2514"
-			printSpaces(depth * 2)
+			printSpaces(depth - 1)
 			//fmt.Printf("\u2502\n")
 			//printSpaces(depth * 2)
-			fmt.Printf("   └── %v\n", children[i].data)
+			fmt.Printf("└── %v\n", children[i].data)
 		}
 
 		if len(children[i].children) > 0 {
+			//print |     |---
+			
+			//printSpaces(depth)
 			printTreeBox(children[i].children, depth + 1)
 		}
 		
@@ -154,7 +162,7 @@ func printTreeBox(children []*Node, depth int) {
 
 
 func printSpaces(depth int) {
-	for j := 0 ; j < depth * 2; j++  {
-		fmt.Printf(" ")
+	for j := 0 ; j < 4 * depth; j++  {
+		fmt.Printf("s")
 	}
 }
