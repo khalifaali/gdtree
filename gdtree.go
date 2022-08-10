@@ -73,7 +73,7 @@ func main() {
 	}
 
 	//bfs(nodePtr)
-	printTreeBox([]*Node{root},0)
+	printTreeBox([]*Node{root}, 0)
 
 }
 
@@ -85,7 +85,7 @@ func insertChildren(parentNode *Node, childData string) {
 func bfs(node *Node) {
 	var q []*Node
 	q = append(q, node)
- 	seen := make(map[string]int)
+	seen := make(map[string]int)
 	//depth := 0
 	for i := 0; i < len(q); i++ {
 		childNode := q[i]
@@ -93,17 +93,14 @@ func bfs(node *Node) {
 			q = append(q, childNode.children[:]...)
 			fmt.Printf("parent %v\n", childNode.data)
 			//printTreeBox([]*Node{childNode}, depth) //A little bit of a hack but if we pass the parentNode
-													// as a list we can print it using the same loginc
+			// as a list we can print it using the same loginc
 			//fmt.Printf("Parent├──%v\n", childNode.data
 			//We shouldn't increase the depth until we exhaust all the children??
 			//Some of these are all children of 1. element
 			// If we  seen that nodes parent increase the depth else continue
 			// We increase the depth bc if it has a child we want it to be at the
 			// same level as its
-			
-		
-	
-			
+
 		}
 
 		if _, prs := seen[childNode.data]; prs {
@@ -113,13 +110,14 @@ func bfs(node *Node) {
 			seen[childNode.data]++
 		}
 		//I want to print
-		 // i thnk we fix this. Purge data from queue that are contained in the
-											//children you;ve aeen
+		// i thnk we fix this. Purge data from queue that are contained in the
+		//children you;ve aeen
 		//I need to add the seen to the children, and
 		printTreeBox(childNode.children, seen[childNode.data])
 		//The queue also has the same data. So I need way to shrink the queue. for the elements seen?
 	}
 }
+
 //need a seen map for the nodes. and if its seen
 //So now I need an index to pass, and the parent node to print out
 func printTreeBox(children []*Node, depth int) {
@@ -129,7 +127,7 @@ func printTreeBox(children []*Node, depth int) {
 		//fmt.Printf("\u2502\n")
 		// We're either printing the first element
 		// or we're printing everything but the last
-		// 
+		//
 		if depth > 1 {
 			//printSpaces(depth)
 			for j := 0; j < depth; j++ {
@@ -138,11 +136,11 @@ func printTreeBox(children []*Node, depth int) {
 			}
 			//fmt.Printf("Depth: %v", depth)
 		}
-	
+
 		if depth == 0 {
 			fmt.Printf("%v\n", children[i].data)
-		} else if i < len(children) - 1 { 
-			
+		} else if i < len(children)-1 {
+
 			//fmt.Printf("\u2502\n")
 			//printSpaces(depth * 2)
 			fmt.Printf("├── %v\n", children[i].data)
@@ -156,17 +154,16 @@ func printTreeBox(children []*Node, depth int) {
 
 		if len(children[i].children) > 0 {
 			//print |     |---
-			
+
 			//printSpaces(depth)
-			printTreeBox(children[i].children, depth + 1)
+			printTreeBox(children[i].children, depth+1)
 		}
-		
+
 	}
 }
 
-
 func printSpaces(depth int) {
-	for j := 0 ; j < 4 ; j++  {
+	for j := 0; j < 4; j++ {
 		fmt.Printf(" ")
 	}
 }
