@@ -38,7 +38,7 @@ func main() {
 	output := regex.ReplaceAllString(out.String(), "\n")
 	graphOutputLines := strings.Split(output, "\n")
 
-	//We now need to build a queue of nodes, and if we see that node we need to add the children
+	//We now need to build a queue of nodes, and if we see that node  we need to add the children
 	var queue []*Node
 
 	var curr *Node
@@ -51,7 +51,6 @@ func main() {
 		if root == nil {
 			root = &Node{data: parentDep}
 			curr = root
-			//fmt.Printf("Root baby %v\n", root.data)
 			insertChildren(root, childDep)
 			queue = append(queue, root.children[len(root.children)-1])
 		} else if curr.data == parentDep {
@@ -72,7 +71,6 @@ func main() {
 		}
 	}
 
-	//bfs(nodePtr)
 	printTreeBox([]*Node{root}, 0)
 
 }
@@ -82,80 +80,32 @@ func insertChildren(parentNode *Node, childData string) {
 	parentNode.children = append(parentNode.children, newNode)
 }
 
-func bfs(node *Node) {
-	var q []*Node
-	q = append(q, node)
-	seen := make(map[string]int)
-	//depth := 0
-	for i := 0; i < len(q); i++ {
-		childNode := q[i]
-		if childNode.children != nil {
-			q = append(q, childNode.children[:]...)
-			fmt.Printf("parent %v\n", childNode.data)
-			//printTreeBox([]*Node{childNode}, depth) //A little bit of a hack but if we pass the parentNode
-			// as a list we can print it using the same loginc
-			//fmt.Printf("Parent├──%v\n", childNode.data
-			//We shouldn't increase the depth until we exhaust all the children??
-			//Some of these are all children of 1. element
-			// If we  seen that nodes parent increase the depth else continue
-			// We increase the depth bc if it has a child we want it to be at the
-			// same level as its
-
-		}
-
-		if _, prs := seen[childNode.data]; prs {
-			seen[childNode.data] = 1
-			//fmt.Println(seen)
-		} else {
-			seen[childNode.data]++
-		}
-		//I want to print
-		// i thnk we fix this. Purge data from queue that are contained in the
-		//children you;ve aeen
-		//I need to add the seen to the children, and
-		printTreeBox(childNode.children, seen[childNode.data])
-		//The queue also has the same data. So I need way to shrink the queue. for the elements seen?
-	}
-}
-
-//need a seen map for the nodes. and if its seen
-//So now I need an index to pass, and the parent node to print out
 func printTreeBox(children []*Node, depth int) {
 	for i := 0; i < len(children); i++ {
-		//printSpaces(depth)
-		//fmt.Printf("Depth %v", depth)
-		//fmt.Printf("\u2502\n")
-		// We're either printing the first element
-		// or we're printing everything but the last
-		//
+
+		//This is here so we can print a line representing the parent tree
+		// and the child that has its own children
+		// parent
+		//  |--- child
+		//  |     └── children
 		if depth > 1 {
-			//printSpaces(depth)
 			for j := 0; j < depth; j++ {
+
 				fmt.Printf("\u2502")
 				printSpaces(depth - 1)
 			}
-			//fmt.Printf("Depth: %v", depth)
 		}
 
 		if depth == 0 {
 			fmt.Printf("%v\n", children[i].data)
 		} else if i < len(children)-1 {
-
-			//fmt.Printf("\u2502\n")
-			//printSpaces(depth * 2)
 			fmt.Printf("├── %v\n", children[i].data)
 		} else {
-			//"\u2514"
-			//printSpaces(depth - 1)
-			//fmt.Printf("\u2502\n")
-			//printSpaces(depth * 2)
 			fmt.Printf("└── %v\n", children[i].data)
 		}
 
 		if len(children[i].children) > 0 {
-			//print |     |---
 
-			//printSpaces(depth)
 			printTreeBox(children[i].children, depth+1)
 		}
 
