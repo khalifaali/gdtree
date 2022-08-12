@@ -84,7 +84,7 @@ func printTreeBox(children []*Node, depth int) {
 		// This is here so we can print a line representing the parent tree
 		// and the child that has its own children
 		// parent
-		//  |--- child
+		//  └── child
 		//  |     └── children
 		if depth > 1 {
 			for j := 0; j < depth; j++ {
