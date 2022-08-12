@@ -25,6 +25,3 @@ Configure `$GOBIN` directory.<br>
 
 Install go module.<br>
 `go install github.com/khalifaali/gdtree`
-
-
-
