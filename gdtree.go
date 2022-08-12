@@ -25,10 +25,6 @@ func main() {
 		fmt.Println(fmt.Sprint(err) + ": " + stderr.String())
 		return
 	}
-	if err != nil {
-		fmt.Println("Error occurred")
-		fmt.Println(err)
-	}
 
 	var root *Node
 	regex, err := regexp.Compile("\n\n")
@@ -38,7 +34,9 @@ func main() {
 	output := regex.ReplaceAllString(out.String(), "\n")
 	graphOutputLines := strings.Split(output, "\n")
 
-	//We now need to build a queue of nodes, and if we see that node  we need to add the children
+	// We now need to build a queue of nodes based on go mod graph output.
+	// For every package on the left side of the output, we create a parent node
+	// and insert append children based on the pacakges from the right side of the output.
 	var queue []*Node
 
 	var curr *Node
@@ -58,14 +56,14 @@ func main() {
 			queue = append(queue, curr, curr.children[len(curr.children)-1])
 		} else {
 			if len(queue) > 0 {
-				//We encountered a depenency with no dependencies of its own
-				// In that case we dequeue
-				// until we find one matching go mod graph output
-				for _, elm := range queue {
+				// We search for the new parent from the child nodes we've queued up matching go mod graph output
+				// These are the nodes that are connected to root.
+				for _, elm := range queue { 
 					if elm.data == parentDep {
 						curr = elm
 					}
 				}
+
 				insertChildren(curr, childDep)
 			}
 		}
@@ -83,7 +81,7 @@ func insertChildren(parentNode *Node, childData string) {
 func printTreeBox(children []*Node, depth int) {
 	for i := 0; i < len(children); i++ {
 
-		//This is here so we can print a line representing the parent tree
+		// This is here so we can print a line representing the parent tree
 		// and the child that has its own children
 		// parent
 		//  |--- child
@@ -105,7 +103,6 @@ func printTreeBox(children []*Node, depth int) {
 		}
 
 		if len(children[i].children) > 0 {
-
 			printTreeBox(children[i].children, depth+1)
 		}
 
