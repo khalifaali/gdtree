@@ -1,7 +1,17 @@
 # gdtree
 ## Description
 Go module built to enhance readibility of `go mod graph` by printing tree-like output.
+
+## How to install
+Configure `$GOBIN` directory.<br>
+`go env -w GOBIN=/path/to/your/bin`
+
+Install go module.<br>
+`go install github.com/khalifaali/gdtree`
+## Usage
+Call `gdtree` in any directory with a go.mod, and go.sum file present.
 ```
+
 [+]gdtree
 github.com/mewkiz/flac
 ├── github.com/go-audio/audio@v1.0.0
@@ -18,10 +28,3 @@ github.com/mewkiz/flac
 │    │    └── golang.org/x/net@v0.0.0-20190213061140-3a22650c66bd
 └── github.com/pkg/errors@v0.8.1
 ```
-
-## How to install
-Configure `$GOBIN` directory.<br>
-`go env -w GOBIN=/path/to/your/bin`
-
-Install go module.<br>
-`go install github.com/khalifaali/gdtree`
