@@ -20,11 +20,11 @@ github.com/mewkiz/flac
 ```
 
 ## How to install
-Configure `$GOBIN` directory.
+Configure `$GOBIN` directory.<br>
 `go env -w GOBIN=/path/to/your/bin`
 
-Install go module.
-`go install github.com/khalifaali/gdtree@latest`
+Install go module.<br>
+`go install github.com/khalifaali/gdtree`
 
 
 
