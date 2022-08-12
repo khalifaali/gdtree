@@ -58,7 +58,7 @@ func main() {
 			if len(queue) > 0 {
 				// We search for the new parent from the child nodes we've queued up matching go mod graph output
 				// These are the nodes that are connected to root.
-				for _, elm := range queue { 
+				for _, elm := range queue {
 					if elm.data == parentDep {
 						curr = elm
 					}
