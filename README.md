@@ -7,7 +7,7 @@ Configure `$GOBIN` directory.<br>
 `go env -w GOBIN=/path/to/your/bin`
 
 Install go module.<br>
-`go install github.com/khalifaali/gdtree`
+`go install github.com/khalifaali/gdtree@latest`
 ## Usage
 Call `gdtree` in any directory with a go.mod, and go.sum file present.
 ```
