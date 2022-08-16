@@ -88,9 +88,15 @@ func printTreeBox(children []*Node, depth int) {
 		//  |     └── children
 		if depth > 1 {
 			for j := 0; j < depth; j++ {
-
-				fmt.Printf("\u2502")
-				printSpaces(depth - 1)
+				// We assume a parent depth is divisible by two starting from the root.
+				// To prevent weird cases where a bar is printed under a direct child - we skip over it.
+				// - 2 prevents an extra bar from being printed on the last element of the list
+				if j % 2 == 0 { 
+					fmt.Printf("\u2502")
+				} else {
+					fmt.Printf(" ")
+				}		
+				printSpaces(depth)
 			}
 		}
 
