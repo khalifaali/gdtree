@@ -9,7 +9,7 @@ Configure `$GOBIN` directory on the terminal.<br>
 Install go module.<br>
 `go install github.com/khalifaali/gdtree@latest`
 
-## Usage
+## Example
 ### Before
 ```
 [+]go mod graph
