@@ -1,6 +1,6 @@
 # gdtree
 ## Description
-Go module built to enhance readibility of `go mod graph` by printing tree-like output.
+Go module built to enhance readability of `go mod graph` by printing tree-like output.
 
 ## How to install
 Configure `$GOBIN` directory on the terminal.<br>
